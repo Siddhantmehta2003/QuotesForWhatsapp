@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: Color(0xffbdbdbd),
       body: Center(
         child: Text(
-          "MIRAGE",
+          "Homepage",
           style: TextStyle(color: Colors.red, fontSize: 40),
         ),
       ),
