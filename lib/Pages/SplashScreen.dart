@@ -13,12 +13,14 @@ class _SplashScreenState extends State<SplashScreen> {
   var data;
   getJsonData() async {
     var response = await http.get(
-        Uri.encodeFull(
-            "https://meme-api.herokuapp.com/gimme/ProgrammerHumor/10"),
+        Uri.encodeFull("https://meme-api.herokuapp.com/gimme/QuotesPorn/5"),
         headers: {"Accept": "application/json"});
-    var convertDataToJson = json.decode(response.body);
-    data = convertDataToJson['memes'];
-    print(response.body);
+
+    setState(() {
+      var convertDataToJson = json.decode(response.body);
+
+      data = convertDataToJson['memes'];
+    });
   }
 
   @override
@@ -28,8 +30,10 @@ class _SplashScreenState extends State<SplashScreen> {
     //Currently simulating the background processes with a timer
     getJsonData();
     Timer _timer = Timer(Duration(seconds: 3), () {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomePage(data: data)));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => HomePage(
+                data: data,
+              )));
     });
   }
 
