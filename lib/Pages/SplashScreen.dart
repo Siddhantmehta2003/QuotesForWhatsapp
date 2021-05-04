@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffbdbdbd),
+      backgroundColor: Colors.lightGreenAccent,
       body: Center(
         child: Text(
           "MIRAGE",
