@@ -10,31 +10,26 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  var data;
-  getJsonData() async {
-    var response = await http.get(
-        Uri.encodeFull("https://meme-api.herokuapp.com/gimme/QuotesPorn/5"),
-        headers: {"Accept": "application/json"});
-
-    setState(() {
-      var convertDataToJson = json.decode(response.body);
-
-      data = convertDataToJson['memes'];
-    });
-  }
-
   @override
   void initState() {
     super.initState();
 
-    //Currently simulating the background processes with a timer
-    getJsonData();
-    Timer _timer = Timer(Duration(seconds: 3), () {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+
+    /* Navigator.push(
+        context,
+        (MaterialPageRoute(
+            builder: (BuildContext context) => HomePage(
+                  data: data,
+                ))));*/
+
+    /* Timer _timer = Timer(Duration(seconds: 5), () {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => HomePage(
                 data: data,
               )));
-    });
+    });*/
   }
 
   @override
