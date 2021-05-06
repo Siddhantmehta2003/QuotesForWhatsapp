@@ -48,34 +48,34 @@ class _HomePageState extends State<HomePage> {
     pages = [];
     for (int i = 0; i < 5; i++) {
       pages.add(Container(
-        // height: MediaQuery.of(context).size.height - 20,// HELLOOOOOOOOOOOOOOOOOOO
-
-        width: MediaQuery.of(context).size.width,
+        height: double.infinity,
         color: ranc[rng.nextInt(6)],
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.network(data[i]["url"]),
-              MaterialButton(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center, //
-                  children: [
-                    Text(
-                      'Share',
-                      style: TextStyle(color: Colors.yellow, fontSize: 30),
-                    ),
-                    Icon(Icons.send)
-                  ],
-                ),
-                onPressed: () async => await _shareImageFromUrl(data[i]["url"]),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FadeInImage(
+                // fit: BoxFit.scaleDown,
+                placeholder: NetworkImage(
+                    "https://via.placeholder.com/500x500.png?text=Internet+seems+slow"),
+                image: NetworkImage((data[i]["url"]))),
+            MaterialButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center, //
+                children: [
+                  Text(
+                    'Share',
+                    style: TextStyle(color: Colors.yellow, fontSize: 30),
+                  ),
+                  Icon(Icons.send)
+                ],
               ),
-            ],
-          ),
+              onPressed: () async => await _shareImageFromUrl(data[i]["url"]),
+            ),
+          ],
         ),
       ));
     }
+    pages.add(Text("Refreshing"));
     setState(() {
       isloading = false;
     });
@@ -98,35 +98,15 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xffbdbdbd),
       body: isloading
           ? Center(child: CircularProgressIndicator())
-          : RefreshIndicator(
-              onRefresh: _pullRefresh,
-              // child: ListView(),
-              child: ListView(
-                children: [
-                  Center(
-                    child: Container(
-                      color: ranc[rng.nextInt(6)],
-                      height: MediaQuery.of(context).size.height - 30,
-                      child: Builder(
-                          builder: (context) => LiquidSwipe(
-                                pages: pages,
-                                onPageChangeCallback: (activePageIndex) {
-                                  if (activePageIndex == 4) {
-//idhar pe toast ka code daalmere ko nahi pata
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            'Refresh karne ke liye pull karte hai gadhe', //vysor daal
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        // timeInSecForIos: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.yellow);
-                                  }
-                                },
-                              )),
-                    ),
-                  ),
-                ],
+          : Builder(
+              builder: (context) => LiquidSwipe(
+                pages: pages,
+                enableLoop: false,
+                onPageChangeCallback: (activePageIndex) {
+                  if (activePageIndex == 5) {
+                    _pullRefresh();
+                  }
+                },
               ),
             ),
     );
