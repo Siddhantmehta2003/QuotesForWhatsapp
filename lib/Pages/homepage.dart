@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
     pages = [];
     for (int i = 0; i < 5; i++) {
       pages.add(Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
         height: double.infinity,
         color: ranc[rng.nextInt(6)],
         child: Column(
