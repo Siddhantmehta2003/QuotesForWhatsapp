@@ -48,29 +48,47 @@ class _HomePageState extends State<HomePage> {
     pages = [];
     for (int i = 0; i < 5; i++) {
       pages.add(Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+        // decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
         height: double.infinity,
+        width: double.infinity,
         color: ranc[rng.nextInt(6)],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FadeInImage(
-                // fit: BoxFit.scaleDown,
-                placeholder: NetworkImage(
-                    "https://via.placeholder.com/500x500.png?text=Internet+seems+slow"),
-                image: NetworkImage((data[i]["url"]))),
-            MaterialButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center, //
-                children: [
-                  Text(
-                    'Share',
-                    style: TextStyle(color: Colors.yellow, fontSize: 30),
-                  ),
-                  Icon(Icons.send)
-                ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(5000)),
+                child: FadeInImage(
+                  // fit: BoxFit.fill,
+                  // fit: BoxFit.scaleDown,
+                  placeholder: NetworkImage(
+                      "https://via.placeholder.com/500x500.png?text=Internet+seems+slow"),
+                  image: NetworkImage((data[i]["url"])),
+                ),
               ),
-              onPressed: () async => await _shareImageFromUrl(data[i]["url"]),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    style: BorderStyle.solid,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(50))),
+              child: MaterialButton(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center, //
+                  children: [
+                    Text(
+                      'Share',
+                      style: TextStyle(color: Colors.yellow, fontSize: 30),
+                    ),
+                    Icon(Icons.send)
+                  ],
+                ),
+                onPressed: () async => await _shareImageFromUrl(data[i]["url"]),
+              ),
             ),
           ],
         ),
